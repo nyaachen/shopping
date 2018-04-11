@@ -24,5 +24,6 @@ class Goods {
     Goods operator-(const Goods &item) const;
     Goods operator+(const Goods &item) const;
 };
+extern Goods ngoods;
 
 #endif

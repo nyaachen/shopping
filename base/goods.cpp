@@ -30,3 +30,5 @@ class Goods {
 			{return Goods(item_id, item_name, item_brand, price, number+item.number);}
 		bool is_offline() const {return number == -1;}
 };
+
+extern Goods ngoods("No id","No item","No brand",0,0);
