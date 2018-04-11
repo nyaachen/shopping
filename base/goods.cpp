@@ -1,6 +1,5 @@
 #include <sstream>
 #include <string>
-#include <vector>
 
 // TODO 优化底层的实现方法
 
@@ -13,15 +12,15 @@ class Goods {
 		int number;
 	public :
 		explicit Goods(std::string s) {
-			std::isstream is(s);
+			std::istringstream is(s);
 			is >> item_id >> item_name >> item_brand >> price >> number;
 		}
 		Goods(std::string id, std::string name, std::string brand, double p, int n) :
 				item_id(id), item_name(name), item_brand(brand), price(p), number(n) {}
 
-		const string & get_id() const {return item_id;}
-		const string & get_name() const {return item_name;}
-		const string & get_brand() const {return item_brand;}
+		const std::string & get_id() const {return item_id;}
+		const std::string & get_name() const {return item_name;}
+		const std::string & get_brand() const {return item_brand;}
 		const double get_price() const {return price;}
 		const int get_number() const {return number;}
 
@@ -30,4 +29,4 @@ class Goods {
 		Goods operator+(const Goods &item) const
 			{return Goods(item_id, item_name, item_brand, price, number+item.number);}
 		bool is_offline() const {return number == -1;}
-}
+};

@@ -1,7 +1,7 @@
 #include <vector>
 #include <algorithm>
 
-#include <goods.h>
+#include "goods.h"
 
 class Stock {
   private :
