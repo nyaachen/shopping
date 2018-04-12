@@ -2,7 +2,6 @@
 #define GOODS_LIST_H
 
 #include <vector>
-#include <functional>
 
 
 #include "goods.h"
@@ -10,7 +9,6 @@
 class Goods_list {
   private :
     std::vector<Goods> goods_list;
-    Goods_list find_sub_item(std::function<bool(Goods&)> unaryPred);
   public :
     Stock();
     explicit Stock(const std::vector<Goods> &source_list);
@@ -20,6 +18,13 @@ class Goods_list {
     Stock & sell_cart();
     decltype(goods_list.cbegin()) cbegin();
     decltype(goods_list.cend()) cend();
+
+    bool is_sub_list(const Goods_list &sub) const;
+    bool is_empty() const;
+
+    Goods_list operator+(const Goods_list &another) const;
+    Goods_list operator-(const Goods_list &another) const;
+    Goods_list &remove_sub_list(const Goods_list &another);
 };
 
 
