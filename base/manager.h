@@ -1,8 +1,8 @@
 #ifndef MANAGER_H
 #define MANAGER_H
 
-#include <sstream>
-#include <fstream>
+
+
 #include <vector>
 
 #include "goods.h"
@@ -10,7 +10,7 @@
 #include "user.h"
 
 class Manager {
-  constexpr User defaultUser("游客", "请登录");
+  constexpr User defaultUser("", "");// TODO update this
 private:
   std::vector<User> user_list;
   std::vector<SuperUser> admin_list;
