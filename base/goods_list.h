@@ -22,6 +22,8 @@ class Goods_list {
     bool is_sub_list(const Goods_list &sub) const;
     bool is_empty() const;
 
+    bool all_goods_is_positive() const;
+
     Goods_list operator+(const Goods_list &another) const;
     Goods_list operator-(const Goods_list &another) const;
     Goods_list &remove_sub_list(const Goods_list &another);
