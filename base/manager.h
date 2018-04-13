@@ -22,6 +22,12 @@ public:
   explicit Manager(const std::string filename) {
     // TODO finish initializing library from file
   }
+  Manager(const Manager &m) = delete;
+  Manager &operator=(Const Manager&) = delete;
+
+  decltype(stock.cbegin()) cbegin() {return stock.cbegin();}
+  decltype(stock.cend()) cend() {return stock.cend();}
+
   SuperUser &superuser_login(std::string uname, std::string pwd) {
     auto iter = std::find_if(admin_list.begin(), admin_list.end(), [uname] (const SuperUser &u) -> bool {return u.get_username() == uname;});
     if ((iter != user_list.end()) and (iter->verify(pwd)))
@@ -34,7 +40,6 @@ public:
   bool superuser_add_item(const SuperUser &u, const Goods &item) {}
   bool superuser_modify_item(const SuperUser &u, const Goods &item) {}
   std::string superuser_view_sell_list(const SuperUser &u) {}
-  void superuser_view_item(const SuperUser &u) {} //FIX
 
   User &login(std::string uname, std::string pwd) {
     auto iter = std::find_if(user_list.begin(), user_list.end(), [uname] (const User &u) -> bool {return u.get_username() == uname;});
@@ -42,7 +47,9 @@ public:
       return *iter;
     return defaultUser;
   }
-  void user_view_item(const User &u, ) {} //FIX
+  void user_add_cart(User &u, const Goods &g) {}
+  void user_modify_cart(User &u, const Goods &g) {}
+  void user_checkout(User &u) {}
 };
 
 
