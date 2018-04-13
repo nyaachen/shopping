@@ -25,6 +25,5 @@ class Goods {
     Goods operator+(const Goods &item) const;
 		bool operator<(const Goods &item) const;
 };
-extern Goods ngoods;
 
 #endif

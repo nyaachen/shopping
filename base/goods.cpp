@@ -25,5 +25,3 @@ Goods Goods::operator+(const Goods &item) const
 bool Goods::operator<(const Goods &item) const {
 	return number < item.number;
 }
-
-Goods ngoods("No id","No item","No brand",0,0);

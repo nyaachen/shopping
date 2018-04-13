@@ -1,11 +1,16 @@
+#ifndef PRINTER_H
+#define PRINTER_H
+
 #include <string>
 #include <sstream>
 #include <iomanip>
 
-#include "cls.h"
 #include "menu.h"
-#include "../base/goods_list.h"
+#include "cls.h"
 
+constexpr std::string sep("  ");
+
+template <typename T> T &get_input(T &a) {};
 constexpr std::string line_split(80,'*');
 
 std::string pretty_goods_printer(const Goods &s){
