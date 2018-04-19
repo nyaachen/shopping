@@ -24,6 +24,9 @@ bool set_number(int a) {number = a; return true;}
 bool Goods::is_same_item(const Goods &g) const {
 	return item_id == g.item_id;
 }
+bool Goods::is_same_price(const Goods &g) const {
+	return price == g.price;
+}
 Goods Goods::operator-(const Goods &item) const{
 	return Goods(item_id, item_name, item_brand, price, number-item.number);
 }

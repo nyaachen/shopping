@@ -4,7 +4,6 @@
 #include <utility>
 #include "goods_list.h"
 
-class SuperUser;
 class User {
 private:
   std::string username;

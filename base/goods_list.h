@@ -13,7 +13,6 @@ class Goods_list : public std::list<Goods> {
     Goods_list find_by_name(const std::string &name);
     Goods_list find_by_brand(const std::string &brand);
 
-    bool is_sub_list(const Goods_list &sub) const;
     bool is_empty() const;
 
     bool all_goods_is_positive() const;

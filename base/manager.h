@@ -30,7 +30,8 @@ public:
   bool superuser_remove_item(const SuperUser &u, const std::string &id);
   bool superuser_remove_item(const SuperUser &u, const Goods &item);
   bool superuser_add_item(const SuperUser &u, const Goods &item);
-  bool superuser_modify_item(const SuperUser &u, const Goods &item);
+  Goods &superuser_modify_item(const SuperUser &u, const std::string &id);
+  Goods &superuser_modify_item(const SuperUser &u, const Goods &item);
   std::string superuser_view_sell_list(const SuperUser &u);
 
   User &login(std::string uname, std::string pwd) {
@@ -39,8 +40,6 @@ public:
       return *iter;
     return defaultUser;
   }
-  void user_add_cart(User &u, const Goods &g) {}
-  void user_modify_cart(User &u, const Goods &g) {}
   void user_checkout(User &u) {}
 };
 
