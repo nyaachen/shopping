@@ -3,3 +3,111 @@ Shopping Control System
 School Homework experiment
 
 DDL 4/13 12:00
+
+base: 控制系统的核心
+cli: 基于命令行的用户友好交互界面
+
+在example里面有一个完整的使用cli的用例，和一个完整的base用例（已经没有这种base用例了）
+
+咕咕咕
+
+
+使用指南
+  该程序基于C++11标准进行编写，并大量采用11的语言特性。请确保你的编译器支持该标准。
+版权
+  你可以任意的修改代码，或是重新发布该代码。
+
+
+cli
+  这是给普通用户写的使用手册。
+
+
+
+base文件夹
+  这是为程序员和开发人员准备的使用手册。
+    如果你是普通用户请查阅cli文件夹的使。
+用手册。
+
+  给程序员的最佳建议：派生你自己的管理系统！
+    在Manager类中我们省略了很多细节。如果有必要，你可以自己实现这些细节。
+    派生是不错的选择。我们的大量类成员为protected类型，这意味着派生类也可以直接实现对他们的访问。
+
+  头文件goods.h定义了Goods类
+    表示一种特定的商品，记录了商品的名称 品牌 价格 数量等
+      Goods(std::string id, std::string name, std::string brand, double p, int n)
+        使用五个参数初始化
+      Goods(std::string s)
+        显式的从一个字符串初始化。该字符串必须按顺序包含以上五个参数。
+      get_id()、get_name()、get_brand()、get_price()、get_number()
+        返回对应的值
+      set_price(double a)、set_number(int a)
+        修改对应值，返回布尔类型
+      is_same_item(const Goods &g)
+        检查是否具有相同编号
+      is_same_price(const Goods &g)
+        检查是否价格相同
+      重载的运算符
+        调用者应负责保证进行的下列运算是有意义的。
+        + - += -=用来实现商品数量的加减运算，商品的其他属性由左操作数决定。
+        > < >= <=实现了对数量多少的比较
+
+  头文件goods_list.h定义了Goods_list类
+    给进阶程序员的指南：
+      这个类公共继承了标准库list类。你可以将他当做一个std::list<Goods>对象。可使用标准库算法扩展更多功能。
+    以公有成员实现的常用方法：
+      find_by_id
+      find_by_name
+      find_by_brand
+        这三个函数都接受一个标准库string对象，并返回一个新的Goods_list对象包含搜索结果。如果没有搜索到就返回空容器。
+      is_empty()
+        标准库empty成员的别名
+      remove_item(...)
+        接受一个字符串或是一个Goods对象的引用，（将字符串当做id属性）寻找并删除id相同的元素。
+        返回布尔值指示删除是否成功。如果没有匹配的对象删除将失败。
+      重载的运算符
+        + - += -=
+        将相同id的商品的数量相加减。
+        如果被减去的容器不包含减去的容器需要的某个元素，则会引发异常。
+        数量为0的元素不会自动删除。如果有需要请自行删除。
+
+  头文件user.h定义了User类和SuperUser类
+    这两个类的对象无法复制，在程序中你应该经常地使用他们的引用。
+    尽管这两个类具有几乎相同的接口，但他们并不基于同一个类派生来。
+    共同的接口
+      User(std::string uname, std::string pwd, const Goods_list &c)
+      SuperUser(std::string uname, std::string pwd）
+      get_username()
+      verify(std::string pwd)
+        验证密码的正确性
+    User类特有的成员
+      cart
+        cart是普通用户的购物车对象。
+
+  头文件manager.h定义了Manager类
+    Manager类保存了整个购物系统所有的库存、用户信息。这个类同样无法复制。
+
+    Manager(const std::string filename)
+      显式用一个cfg配置文件初始化整个管理系统的数据库
+    cbegin() cend()
+      用来浏览库存的标准库迭代器。该迭代器保证至少为前向迭代器。
+      在任何情况下都不应对迭代器的底层类型做出假设。请用auto推断其类型。
+    login(std::string uname, std::string pwd)
+    superuser_login(std::string uname, std::string pwd)
+      接受用户名和密码参数，返回一个对应用户类型的引用。
+      如果发生错误将抛出异常。
+    以下功能都接受一个用户引用作为第一个参数，因此下述参数均为其他的必须参数。这个用户必须位于用户库中。
+      superuser_remove_item
+        接受一个Goods类或表示id的字符串。下架该商品。
+      superuser_add_item
+        接受一个Goods类的引用，并将它的副本保存到库存中。
+        用户应保证这个商品不是重复的。
+      superuser_modify_item
+        接受一个Goods类或表示id的字符串，返回库存中的对应商品的引用。
+        如果库存中没有这个商品，则抛出异常。
+      superuser_view_sell_list
+        查看销售记录文件中的内容。返回销售记录的string对象。
+      user_checkout
+        结账。
+        结账成功会返回true，并修改对应库存记录，清空购物车。
+        用户需要保证结算时购物车中要购买的商品数量不多于库存数量。
+        如果结账发生任何错误都返回false。

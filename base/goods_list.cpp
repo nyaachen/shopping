@@ -6,30 +6,64 @@
 #include "goods_list.h"
 
 
-Goods_list::Stock(): goods_list() {}
-Goods_list::Stock(const std::vector<Goods> &source_list) : goods_list(source_list) {}
 Goods_list Goods_list::find_by_id(const std::string &id) {
   Goods_list tmp;
-  std::copy_if(goods_list.begin(), goods_list.end(), std::back_inserter(tmp), [id] (Goods &a) {return a.get_id() == id;});
+  std::copy_if(begin(), end(), std::back_inserter(tmp), [id] (Goods &a) {return a.get_id() == id;});
   return Goods_list(tmp);
 }
 Goods_list Goods_list::find_by_name(const std::string &name) {
   Goods_list tmp;
-  std::copy_if(goods_list.begin(), goods_list.end(), std::back_inserter(tmp), [name] (Goods &a) {return a.get_name().find(name) != std::string::npos;});
+  std::copy_if(begin(), end(), std::back_inserter(tmp), [name] (Goods &a) {return a.get_name().find(name) != std::string::npos;});
   return Goods_list(tmp);
 }
 Goods_list Goods_list::find_by_brand(const std::string &brand) {
   Goods_list tmp;
-  std::copy_if(goods_list.begin(), goods_list.end(), std::back_inserter(tmp), [brand] (Goods &a) {return a.get_brand().find(brand) != std::string::npos;});
+  std::copy_if(begin(), end(), std::back_inserter(tmp), [brand] (Goods &a) {return a.get_brand().find(brand) != std::string::npos;});
   return Goods_list(tmp);
 }
-Stock & Goods_list::sell_cart();
-decltype(goods_list.cbegin()) Goods_list::cbegin() {return goods_list.cbegin();}
-decltype(goods_list.cend()) Goods_list::cend() {return goods_list.cend();}
 
-bool Goods_list::is_empty() const {return goods_list.empyt();}
-bool Goods_list::is_sub_list(const Goods_list &sub) const;
+bool Goods_list::is_empty() const {return goods_list.empty();}
 
-Goods_list Goods_list::operator+(const Goods_list &another) const
-Goods_list Goods_list::operator-(const Goods_list &another) const
-Goods_list &Goods_list::remove_sub_list(const Goods_list &another);
+
+bool remove_item(const std::string &id) {
+  auto iter = std::find_if(begin(), end(), [id] (const Goods &g) {return g.get_id() == id;});
+  if (iter == end()) return false;
+  erase(iter);
+  return true;
+}
+bool remove_item(const Goods &g) {return remove_item(g.get_id());}
+
+Goods_list Goods_list::operator+(const Goods_list &another) const {
+  Goods_list tmp(*this);
+  for(auto iter = another.cbegin(); iter != another.cend(); ++iter) {
+    auto target = std::find_if(tmp.begin(), tmp.end(), [iter] (const Goods &g) {return g.get_id() == iter->get_id();});
+    if (target == tmp.end()) tmp.push_back(*iter);
+    else *target += *iter;
+  }
+  return tmp;
+}
+Goods_list Goods_list::operator-(const Goods_list &another) const {
+  Goods_list tmp(*this);
+  for(auto iter = another.cbegin(); iter != another.cend(); ++iter) {
+    auto target = std::find_if(tmp.begin(), tmp.end(), [iter] (const Goods &g) {return g.get_id() == iter->get_id();});
+    if (target == tmp.end()) throw "Invalid Argument"; // FIX using std error
+    *target -= *iter;
+  }
+  return tmp;
+}
+Goods_list &operator+=(const Goods_list &another){
+  for(auto iter = another.cbegin(); iter != another.cend(); ++iter) {
+    auto target = std::find_if(begin(), end(), [iter] (const Goods &g) {return g.get_id() == iter->get_id();});
+    if (target == end()) push_back(*iter); // FIX using std error
+    else *target -= *iter;
+  }
+  return *this;
+}
+Goods_list &operator-=(const Goods_list &another){
+  for(auto iter = another.cbegin(); iter != another.cend(); ++iter) {
+    auto target = std::find_if(begin(), end(), [iter] (const Goods &g) {return g.get_id() == iter->get_id();});
+    if (target == end()) throw "Invalid Argument"; // FIX using std error
+    *target -= *iter;
+  }
+  return *this;
+}

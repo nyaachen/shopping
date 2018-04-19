@@ -5,7 +5,7 @@
 #include <sstream>
 
 class Goods {
-	private :
+	protected :
 		std::string item_id;
 		std::string item_name;
 		std::string item_brand;
@@ -18,13 +18,21 @@ class Goods {
     const std::string & get_id() const;
     const std::string & get_name() const;
     const std::string & get_brand() const;
-    const double get_price() const;
-    const int get_number() const;
+    double get_price() const;
+    int get_number() const;
 
+		bool set_price(double a);
+		bool set_number(int a);
+
+		bool is_same_item(const Goods &g) const;
     Goods operator-(const Goods &item) const;
     Goods operator+(const Goods &item) const;
+		Goods &operator-=(const Goods &item);
+		Goods &operator+=(const Goods &item);
 		bool operator<(const Goods &item) const;
+		bool operator>(const Goods &item) const;
+		bool operator<=(const Goods &item) const;
+		bool operator>=(const Goods &item) const;
 };
-extern Goods ngoods;
 
 #endif
