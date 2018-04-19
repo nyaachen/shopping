@@ -5,7 +5,7 @@
 #include "goods_list.h"
 
 class User {
-private:
+protected:
   std::string username;
   std::string password;
 public:
@@ -17,7 +17,7 @@ public:
   bool verify(std::string pwd) {return password == pwd;}
 };
 class SuperUser{
-private:
+protected:
   std::string username;
   std::string password;
 public:

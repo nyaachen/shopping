@@ -54,7 +54,7 @@ Goods_list Goods_list::operator-(const Goods_list &another) const {
 Goods_list &operator+=(const Goods_list &another){
   for(auto iter = another.cbegin(); iter != another.cend(); ++iter) {
     auto target = std::find_if(begin(), end(), [iter] (const Goods &g) {return g.get_id() == iter->get_id();});
-    if (target == tmp.end()) push_back(*iter); // FIX using std error
+    if (target == end()) push_back(*iter); // FIX using std error
     else *target -= *iter;
   }
   return *this;
@@ -62,7 +62,7 @@ Goods_list &operator+=(const Goods_list &another){
 Goods_list &operator-=(const Goods_list &another){
   for(auto iter = another.cbegin(); iter != another.cend(); ++iter) {
     auto target = std::find_if(begin(), end(), [iter] (const Goods &g) {return g.get_id() == iter->get_id();});
-    if (target == tmp.end()) throw "Invalid Argument"; // FIX using std error
+    if (target == end()) throw "Invalid Argument"; // FIX using std error
     *target -= *iter;
   }
   return *this;

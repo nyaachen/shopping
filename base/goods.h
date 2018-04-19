@@ -5,7 +5,7 @@
 #include <sstream>
 
 class Goods {
-	private :
+	protected :
 		std::string item_id;
 		std::string item_name;
 		std::string item_brand;

@@ -15,7 +15,6 @@ class Goods_list : public std::list<Goods> {
 
     bool is_empty() const;
 
-    bool all_goods_is_positive() const;
 
     bool remove_item(const std::string &id);
     bool remove_item(const Goods &g);

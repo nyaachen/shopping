@@ -10,7 +10,7 @@
 #include "user.h"
 
 class Manager {
-private:
+protected:
   std::vector<User> users;
   std::vector<SuperUser> admins;
   std::string configfile;
