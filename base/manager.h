@@ -15,9 +15,15 @@ private:
   std::vector<SuperUser> admins;
   std::string configfile;
   goods_list stock;
-  bool init_stock(std::string filename) {}
-  bool init_user_list(std::string filename) {}
-  bool init_superuser_list(std::string filename) {}
+  bool init_stock(std::string filename);
+  bool init_user_list(std::string filename);
+  bool init_superuser_list(std::string filename);
+
+  bool has_superuser(const SuperUser &u);
+  bool has_user(const User &u);
+  bool add_item(const Goods &item);
+  bool remove_item(const std:string &id);
+  bool modify_item(const std::string &id);
 public:
   explicit Manager(const std::string filename);
   Manager(const Manager &m) = delete;
@@ -34,13 +40,8 @@ public:
   Goods &superuser_modify_item(const SuperUser &u, const Goods &item);
   std::string superuser_view_sell_list(const SuperUser &u);
 
-  User &login(std::string uname, std::string pwd) {
-    auto iter = std::find_if(user_list.begin(), user_list.end(), [uname] (const User &u) -> bool {return u.get_username() == uname;});
-    if ((iter != user_list.end()) and (iter->verify(pwd)))
-      return *iter;
-    return defaultUser;
-  }
-  void user_checkout(User &u) {}
+  User &login(std::string uname, std::string pwd);
+  void user_checkout(User &u);
 };
 
 
