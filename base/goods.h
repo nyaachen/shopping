@@ -29,7 +29,10 @@ class Goods {
     Goods operator+(const Goods &item) const;
 		Goods &operator-=(const Goods &item);
 		Goods &operator+=(const Goods &item);
-		bool is_no_more_than(const Goods &item) const;
+		bool operator<(const Goods &item) const;
+		bool operator>(const Goods &item) const;
+		bool operator<=(const Goods &item) const;
+		bool operator>=(const Goods &item) const;
 };
 
 #endif

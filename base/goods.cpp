@@ -38,6 +38,12 @@ Goods &operator+=(const Goods &item){
 	number += item.number;
 	return *this;
 }
-bool Goods::is_no_more_than(const Goods &item) const {
-	return number <= item.number;
+
+bool operator<(const Goods &item) const {
+	return number < item.number;
 }
+bool operator>(const Goods &item) const {
+	return number > item.number;
+}
+bool operator<=(const Goods &item) const {return !(*this>item);}
+bool operator>=(const Goods &item) const {return !(*this<item);}
