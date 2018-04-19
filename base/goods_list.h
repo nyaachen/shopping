@@ -25,7 +25,6 @@ class Goods_list : public std::list<Goods> {
     Goods_list operator-(const Goods_list &another) const;
     Goods_list &operator+=(const Goods_list &another);
     Goods_list &operator-=(const Goods_list &another);
-    Goods_list &remove_sub_list(const Goods_list &another);
 };
 
 

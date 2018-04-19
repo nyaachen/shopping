@@ -23,7 +23,9 @@ Goods_list Goods_list::find_by_brand(const std::string &brand) {
 }
 
 bool Goods_list::is_empty() const {return goods_list.empyt();}
-bool Goods_list::is_sub_list(const Goods_list &sub) const;
+bool Goods_list::is_sub_list(const Goods_list &sub) const{
+
+}
 
 bool remove_item(const std::string &id) {
   auto iter = std::find_if(begin(), end(), [id] (const Goods &g) {return g.get_id() == id;});
@@ -55,15 +57,15 @@ Goods_list &operator+=(const Goods_list &another){
   for(auto iter = another.cbegin(); iter != another.cend(); ++iter) {
     auto target = std::find_if(begin(), end(), [iter] (const Goods &g) {return g.get_id() == iter->get_id();});
     if (target == tmp.end()) push_back(*iter); // FIX using std error
-    *target -= *iter;
+    else *target -= *iter;
   }
+  return *this;
 }
 Goods_list &operator-=(const Goods_list &another){
   for(auto iter = another.cbegin(); iter != another.cend(); ++iter) {
-    auto target = std::find_if(tmp.begin(), tmp.end(), [iter] (const Goods &g) {return g.get_id() == iter->get_id();});
+    auto target = std::find_if(begin(), end(), [iter] (const Goods &g) {return g.get_id() == iter->get_id();});
     if (target == tmp.end()) throw "Invalid Argument"; // FIX using std error
     *target -= *iter;
   }
+  return *this;
 }
-
-Goods_list &Goods_list::remove_sub_list(const Goods_list &another);
