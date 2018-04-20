@@ -71,6 +71,7 @@ std::ostream &operator<<(std::ostream &os, const Menulist &m) {
     os << m.SELECTIONS[i] << TAB << *iter << std::endl;
     ++i;
   }
+  os << m.EXIT << TAB << "退出" <<std::endl;
   return os;
 }
 
