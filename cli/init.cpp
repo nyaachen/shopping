@@ -8,7 +8,7 @@
 #include "goods.h"
 #include "goods_list.h"
 
-constexpr std::string LINE_SEP(50,'*');
+
 
 void main_loop(Manager &m ,std::istream &is, std::ostream &os);
 
@@ -72,7 +72,6 @@ void superuser_login(Manager &m, std::istream &is, std::ostream &os) {
 
 void view_item(Manager &m, std::ostream &os, bool showneg=false) {
   for(auto iter = m.cbegin(); iter != m.cend(); ++iter) {
-    os << "ID" << TAB << "名称" << TAB << "品牌"< TAB << "价格" << TAB << "数量" << std::endl << LINE_SEP << std::endl;
     if ((showneg) or (*iter.get_number() > 0))
       os << *iter << std::endl;
   }
@@ -85,12 +84,23 @@ void search_item(Manager &m, std::istream &is, std::ostream &os) {
   if (r.is_empty()) os << "没有相关商品" << std::endl;
   else os << "找到以下商品\n" << r;
 }
-void add_item(Manager &m, User &u, std::istream &is, std::ostream &os);
+void user_add_item(Manager &m, User &u, std::istream &is, std::ostream &os) {
+  os << "要添加的商品id和数量";
+  std::string id; int count(0);
+  is >> id >> count;
+  auto r = m.find_by_id(id);
+  if (r.is_empty()) os << "没有该商品" << std::endl;
+  else u.cart += r;
+}
+void user_modify_item(Manager &m, User &u, std::istream &is, std::ostream &os) {
+  
+}
 void user_interface(Manager &m, User &u, std::istream &is, std::ostream &os) {
   Menulist m();
   m.add_menu("查看商品", [&] () {view_item(m, os);} );
   m.add_menu("搜索商品", [&] () {search_item(m, is, os);});
-  m.add_menu("加入购物车", [&] () {add_item(m, u, is, os);});
+  m.add_menu("加入购物车", [&] () {user_add_item(m, u, is, os);});
+  m.add_menu("修改购物车", [&] () {user_modify_item(m, u, is, os);});
   while (true) {
 
   }

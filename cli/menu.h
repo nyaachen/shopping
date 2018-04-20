@@ -13,6 +13,7 @@
 #include "goods.h"
 #include "goods_list.h"
 constexpr std::string TAB("\t");
+constexpr std::string LINE_SEP(50,'*');
 
 ostream &operator<<(std::ostream &os, const Goods &g){
   std::ostringstream tos
@@ -21,6 +22,7 @@ ostream &operator<<(std::ostream &os, const Goods &g){
 }
 
 ostream &operator<<(std::ostream &os, const Goods_list &l){
+  os << "ID" << TAB << "名称" << TAB << "品牌"< TAB << "价格" << TAB << "数量" << std::endl << LINE_SEP << std::endl;
   for(auto iter = l.cbegin(); iter != l.cend(); ++iter)
     os << *iter << std::endl;
   return os;
