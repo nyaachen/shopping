@@ -93,7 +93,20 @@ void user_add_item(Manager &m, User &u, std::istream &is, std::ostream &os) {
   else u.cart += r;
 }
 void user_modify_item(Manager &m, User &u, std::istream &is, std::ostream &os) {
-  
+  os << "要修改的商品id:"
+  std::string id;
+  is >> id;
+  auto iter = std::find_if(u.cart.begin(), u.cart.end(), [id] (const Goods &g) {return g.get_id() == id;});
+  if (iter == u.cart.end()) os << "没有该商品" << std::endl;
+  else {
+    os << "修改为数量:"
+    int number;
+    is >> number;
+    *iter.set_number(number);
+  }
+}
+void view_cart(Manager &m, User &u, std::ostream &os) {
+  // check for errors
 }
 void user_interface(Manager &m, User &u, std::istream &is, std::ostream &os) {
   Menulist m();
@@ -101,6 +114,7 @@ void user_interface(Manager &m, User &u, std::istream &is, std::ostream &os) {
   m.add_menu("搜索商品", [&] () {search_item(m, is, os);});
   m.add_menu("加入购物车", [&] () {user_add_item(m, u, is, os);});
   m.add_menu("修改购物车", [&] () {user_modify_item(m, u, is, os);});
+  m.add_menu("查看购物车", [&] () {view_cart(m, u, os)})
   while (true) {
 
   }
