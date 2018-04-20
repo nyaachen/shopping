@@ -13,7 +13,7 @@ constexpr std::string LINE_SEP(50,'*');
 void main_loop(Manager &m ,std::istream &is, std::ostream &os);
 
 std::function<void()> init_cli(const std::string &cfg, std::istream &is, std::ostream &os) {
-  Manager my_manager("config.cfg");
+  Manager my_manager(cfg);
   return [&] () {main_loop(my_manager, is, os);}
 }
 
@@ -32,27 +32,40 @@ void main_loop(Manager &m, std::istream &is, std::ostream &os)
   is >> choices;
   main_menu(choices);
 }
-
-void user_login(Manager &m);
-  if (main_menu.contain(choices)) {
-    cout << ;
-    cin >> uname;
-    cout << ;
-    cin >> pwd;
-    try {
-      switch (choices) {
-        case "1":
-          manager.login(uname, pwd);
-          break;
-        case "2":
-          manager.new_user(uname, pwd);
-          break;
-        case "3":
-          manager.superuser_login(uname, pwd);
-          break;
-      }
-    }
-    catch (...) { cout <<  << endl; return -1}
+void user_interface(Manager &m, User &u, std::istream &is, std::ostream &os);
+void superuser_interface(Manager &m, SuperUser &u, std::istream &is, std::ostream &os);
+void user_login(Manager &m, std::istream &is, std::ostream &os) {
+  cout << "请输入用户名";
+  cin >> uname;
+  cout << "请输入密码";
+  cin >> pwd;
+  try {
+    User &u = manager.login(uname, pwd);
+    user_interface(m, u, is, os);
   }
-  return 1;
+  catch (...) { os << "登陆失败" << std::endl;}
+}
+void user_register(Manager &m, std::istream &is, std::ostream &os) {
+  cout << "请输入用户名";
+  cin >> uname;
+  cout << "请输入密码";
+  cin >> pwd;
+  try {
+    manager.new_user(uname, pwd);
+    User &u = manager.login(uname, pwd);
+    user_interface(m, u, is, os);
+  }
+  catch (...) { os << "注册失败" << std::endl;}
+}
+
+void superuser_login(Manager &m, std::istream &is, std::ostream &os) {
+  cout << "请输入管理员名";
+  cin >> uname;
+  cout << "请输入密码";
+  cin >> pwd;
+  try {
+    SuperUser &u = manager.superuser_login(uname, pwd);
+    superuser_interface(m, u, is, os);
+  }
+  catch (...) { os << "登陆失败" << std::endl;}
 }
