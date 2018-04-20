@@ -5,7 +5,7 @@
 Manager::Manager(const std::string filename) : configfile(filename), users(), admins(), stock() {
   // TODO finish initializing library from file
   // users.emplace_back();
-  throw "Not Complited Error"
+  ;
 }
 
 bool init_stock(std::string filename) {}
