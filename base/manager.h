@@ -32,6 +32,7 @@ public:
   decltype(stock.cbegin()) cbegin() {return stock.cbegin();}
   decltype(stock.cend()) cend() {return stock.cend();}
 
+  bool new_user(const std::string &username, const std::string &pwd);
   SuperUser &superuser_login(std::string uname, std::string pwd);
   bool superuser_remove_item(const SuperUser &u, const std::string &id);
   bool superuser_remove_item(const SuperUser &u, const Goods &item);

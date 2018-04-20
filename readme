@@ -1,15 +1,5 @@
 Shopping Control System
 
-School Homework experiment
-
-DDL 4/13 12:00
-
-base: 控制系统的核心
-cli: 基于命令行的用户友好交互界面
-
-在example里面有一个完整的使用cli的用例，和一个完整的base用例（已经没有这种base用例了）
-
-咕咕咕
 
 
 使用指南
@@ -90,6 +80,8 @@ base文件夹
     cbegin() cend()
       用来浏览库存的标准库迭代器。该迭代器保证至少为前向迭代器。
       在任何情况下都不应对迭代器的底层类型做出假设。请用auto推断其类型。
+    new_user(const std::string &username, const std::string &pwd)
+      创建新用户。如果用户名存在会引发异常。
     login(std::string uname, std::string pwd)
     superuser_login(std::string uname, std::string pwd)
       接受用户名和密码参数，返回一个对应用户类型的引用。

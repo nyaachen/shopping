@@ -19,6 +19,12 @@ User &Manager::login(std::string uname, std::string pwd) {
     return *iter;
   else throw "Invalid Argument";
 }
+bool Manager::new_user(const std::string &username, const std::string &pwd){
+  auto iter = std::find_if(users.begin(), users.end(), [username] (const User &u) {return u.get_username() == username;});
+  if (iter == users.end()) throw "Invalid Argument";
+  users.emplace_back(username, pwd, Goods_list());
+  return true;
+}
 bool Manager::has_user(const User &u){
   auto iter = std::find_if(users.begin(), users.end(), [&u] (const User &user) {return &u == &user;});
   if (iter == users.end()) return false;
