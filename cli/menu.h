@@ -49,14 +49,14 @@ class Menulist{
 private:
   std::vector<Menu> l;
   constexpr std::string SELECTIONS ("123456789abcdefghigklmnopqrstuvwxyz");
-  constexpr std::string PAGES ("-=0");
+  constexpr std::string EXIT ("0");
 public:
   Menulist() : l() {}
   add_menu(const std::string &name, std::function<void()> f){
     l.emplace_back(name, f);
   }
   void operator()(const std::string &s) {
-    if (s) {
+    if ((s) and (s[0] != EXIT)) {
       auto select = SELECTIONS.find(s[0]);
       if (select != std::string::npos) {
         l[select]();
