@@ -107,6 +107,16 @@ void user_modify_item(Manager &m, User &u, std::istream &is, std::ostream &os) {
 }
 void view_cart(Manager &m, User &u, std::ostream &os) {
   // check for errors
+  Goods_list valid(), invalid();
+  for (Goods &item : u.cart) {
+    auto iter = std::find_if(m.cbegin(), m.cend(), [item] (const Goods &g) {return g.get_id() == item.get_id();});
+    if ((iter == m.cend()) or (*iter<item))
+      invalid.push_back(item);
+    else
+      valid.push_back(item);
+  }
+  os << "有问题的商品" << invalid << std::endl;
+  os << "可正常购买的商品"  << valid << std::endl;
 }
 void user_interface(Manager &m, User &u, std::istream &is, std::ostream &os) {
   Menulist m();
@@ -116,7 +126,10 @@ void user_interface(Manager &m, User &u, std::istream &is, std::ostream &os) {
   m.add_menu("修改购物车", [&] () {user_modify_item(m, u, is, os);});
   m.add_menu("查看购物车", [&] () {view_cart(m, u, os)})
   while (true) {
-
+    os << main_menu << "选择:";
+    std::string choices;
+    is >> choices;
+    main_menu(choices);
   }
 }
-void superuser_interface(Manager &m, SuperUser &u, std::istream &is, std::ostream &os);
+void superuser_interface(Manager &m, SuperUser &u, std::istream &is, std::ostream &os) {}

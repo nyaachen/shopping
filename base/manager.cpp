@@ -7,6 +7,11 @@ Manager::Manager(const std::string filename) : configfile(filename), users(), ad
   // users.emplace_back();
   throw "Not Complited Error"
 }
+
+bool init_stock(std::string filename) {}
+bool init_user_list(std::string filename) {}
+bool init_superuser_list(std::string filename) {}
+
 SuperUser &Manager::superuser_login(std::string uname, std::string pwd) {
   auto iter = std::find_if(admins.begin(), admins.end(), [uname] (const SuperUser &u) -> bool {return u.get_username() == uname;});
   if ((iter != admins.end()) and (iter->verify(pwd)))
