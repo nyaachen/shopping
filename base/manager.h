@@ -31,6 +31,8 @@ public:
 
   decltype(stock.cbegin()) cbegin() {return stock.cbegin();}
   decltype(stock.cend()) cend() {return stock.cend();}
+  Goods_list find_by_id(const std::string &id) {return stock.find_by_id(id);}
+  Goods_list find_by_name(const std::string &name) {return stock.find_by_name(name);}
 
   bool new_user(const std::string &username, const std::string &pwd);
   SuperUser &superuser_login(std::string uname, std::string pwd);

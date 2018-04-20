@@ -69,3 +69,30 @@ void superuser_login(Manager &m, std::istream &is, std::ostream &os) {
   }
   catch (...) { os << "登陆失败" << std::endl;}
 }
+
+void view_item(Manager &m, std::ostream &os, bool showneg=false) {
+  for(auto iter = m.cbegin(); iter != m.cend(); ++iter) {
+    os << "ID" << TAB << "名称" << TAB << "品牌"< TAB << "价格" << TAB << "数量" << std::endl << LINE_SEP << std::endl;
+    if ((showneg) or (*iter.get_number() > 0))
+      os << *iter << std::endl;
+  }
+}
+void search_item(Manager &m, std::istream &is, std::ostream &os) {
+  os << "请输入商品名";
+  std::string name;
+  is >> name;
+  auto r = m.find_by_name(name);
+  if (r.is_empty()) os << "没有相关商品" << std::endl;
+  else os << "找到以下商品\n" << r;
+}
+void add_item(Manager &m, User &u, std::istream &is, std::ostream &os);
+void user_interface(Manager &m, User &u, std::istream &is, std::ostream &os) {
+  Menulist m();
+  m.add_menu("查看商品", [&] () {view_item(m, os);} );
+  m.add_menu("搜索商品", [&] () {search_item(m, is, os);});
+  m.add_menu("加入购物车", [&] () {add_item(m, u, is, os);});
+  while (true) {
+
+  }
+}
+void superuser_interface(Manager &m, SuperUser &u, std::istream &is, std::ostream &os);
